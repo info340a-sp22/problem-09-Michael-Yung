@@ -27,20 +27,25 @@ export default function TrackList({ setAlertMessage }) { //setAlertMessage callb
 
         return jsonPromise
       })
-      .catch((error) => {
-        const erromsg = error.message
-        setAlertMessage(erromsg)
-      })
       .then((result) => {
+        console.log(result)
+        if (result == undefined) {
+          setAlertMessage("No tracks found for album.")
+        }
         let receivedData = result.results
 
         receivedData = receivedData.slice(1)
 
         if (receivedData.length == 0) {
-          setAlertMessage("No tracks found for album")
+          setAlertMessage("No tracks found for album.")
         }
 
         setTrackData(receivedData)
+      })
+      .catch((error) => {
+        const erromsg = error.message
+        setAlertMessage(erromsg)
+      }).then(()=>{
         setIsQuerying(false)
       })
 

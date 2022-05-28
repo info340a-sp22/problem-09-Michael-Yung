@@ -27,17 +27,19 @@ function App(props) {
 
         return jsonPromise
       })
+      .then((result) => {
+        const receivedData = result.results
+        if (receivedData.length == 0) {
+          setAlertMessage("No results found.")
+        }
+        setAlbumData(receivedData);
+
+      })
       .catch((error) => {
         const erromsg = error.message
         setAlertMessage(erromsg)
       })
-      .then((result) => {
-        const receivedData = result.results
-        if (receivedData.length == 0) {
-          setAlertMessage("No results found")
-        }
-        setAlbumData(receivedData);
-
+      .then(() => {
         isSearching[1](false);
       })
   }
